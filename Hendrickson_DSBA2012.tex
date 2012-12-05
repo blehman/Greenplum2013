@@ -16,7 +16,7 @@
 
 \usepackage[group-separator={,}]{siunitx}
 %\usepackage{fontspec}
-
+\usepackage{graphicx}
 
 \setbeamertemplate{footline}[text line]{
     \colorbox{white}{\parbox[22px]{\paperwidth} {\color{linecolour} {\line(1,0){500} \\ \hfill Gnip Inc.   @DrSkippy27}}}
@@ -28,7 +28,7 @@
 \usepackage{tikz}
 
 \begin{document}
-\title{About Gnip, with examples\ldots}
+\title{Gnip, with examples\ldots}
 \subtitle{Data Science/Business Analytics Meetup - Denver}
 \author{Scott Hendrickson \\ Data Scientist \\  @DrSkippy27}
 \date{\today} 
@@ -66,9 +66,9 @@
 
 % firehoses
 
-\begin{frame}
+\begin{frame}\frametitle{Firehose}
 \begin{center}
-{\Large Firehose: Continuous stream of flexibly structured social media activities in near-real time.}
+{\Large Continuous stream of flexibly structured social media activities in near-real time.}
 \end{center}
 \end{frame}
 
@@ -100,6 +100,15 @@
 \end{table}
 \end{frame}
 
+% history of growth
+
+\begin{frame}\frametitle{Twitter Growth (2006 - 2010)\ldots}
+  \begin{center}
+    \includegraphics[width=7.5cm]{./imgs/TweetCount_byDay.pdf}
+  \end{center}
+\end{frame}
+
+
 % sink fail
 % turn this...
 
@@ -119,23 +128,79 @@
   \end{center}
 \end{frame}
 
-
-%%%
-%%%
-%%%
-
 % powertrack filtering
 
-\begin{frame}
-\begin{center}
-{\Huge Filter: match terms (AND, OR, NOT), metadata }
-\end{center}
+\begin{frame}\frametitle{Streaming firehose with cURL \ldots}
+  \begin{center}
+    \includegraphics[width=7cm]{./imgs/hose-json.png} \\
+  \end{center}
 \end{frame}
 
-
+{
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{./imgs/json.png}}
 \begin{frame}
+  \begin{center}
+\textcolor{black}{\Huge Link: \hyperlink{file://localhost/Users/scotthendrickson/Documents/DSBAMeetup2012/twitter_record.html}{twitter.json}}
+  \end{center}
+\end{frame}
+}
+
+\begin{frame}\frametitle{PowerTrack: Shape and Filter}
+\begin{itemize}
+\item core idea: token filter (e.g. "obama", "beer" \ldots)
+\item operators: meta-data (geo, language, bios, \ldots)
+\item operators: shaping (e.g. sample:10%%)
+\item operators: (by publisher) user, hashtag, language,\ldots
+\item combinations:  
+\end{itemize}
+
+% rules
+
+\begin{equation*}
+\begin{aligned}
+        newline &= OR \\
+        space &= AND \\
+        ``AND'' &= AND \\
+        ``OR'' &= OR \\
+        ``-'' &= NOT \\
+        ``(\ldots)'' &= grouping\\
+        `` \ldots ''  &= literal \\
+\end{aligned}
+\end{equation*}
+\end{frame}
+
+% rules examples
+
+\begin{frame}[fragile]\frametitle{Example Toyota PowerTrack Rules}
+\begin{verbatim}
+-evt10023885212 (sexy OR speed OR speeding OR \sport utility\" OR ...
+  suv OR toyota) (infiniti OR infinitis OR #infiniti OR @infiniti) -job ...
+  -\"<money>\" -\"<phone>\" -jobs -deal -review -#jobs -tattoo ...
+  -giveaway -deals -discount -reviews -#job -jewelry -jewelry
+@toyotacanada
+lang:en toyota recall
+lang:ru toyota recall
+lang:it toyota window
+lang:fr toyota recall
+lang:en toyota auris -crime -lease -sells -thief -police -robbed -robber
+lang:ru toyota dyna -lkw -aqua -bail -died -film -toka -camry
+lang:en toyota yaris -lkw -aqua -bail -died -film -toka -camry
+\end{verbatim}
+\end{frame}
+
+\begin{frame}\frametitle{Enterprise Features}
 \begin{center}
-{\Huge Shape: sample, redundancy, replay }
+\begin{itemize}
+\item Keep alive - signal that connection is live, even when no data is coming
+\item Low latency: avg 1s Twitter; 10s Twitter enriched \ldots
+\item Redundancy - multiple simultaneous connections
+\item Backfill - buffer data and fill in if short term disconnect
+\item Replay - connect with start and end dates to stream past time periods (<5 days)
+\item Historical PowerTrack - Twitter historical filtering for any time period
+\item Rules: 250K rules
+\item Update individual rules without disconnect, $\lesssim1s$ update time (100s of rules)
+\item Rule tagging
+\end{itemize}
 \end{center}
 \end{frame}
 
