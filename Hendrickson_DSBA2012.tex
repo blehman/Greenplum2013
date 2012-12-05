@@ -16,6 +16,8 @@
 
 \usepackage[group-separator={,}]{siunitx}
 %\usepackage{fontspec}
+
+
 \setbeamertemplate{footline}[text line]{
     \colorbox{white}{\parbox[22px]{\paperwidth} {\color{linecolour} {\line(1,0){500} \\ \hfill Gnip Inc.   @DrSkippy27}}}
 }
@@ -26,14 +28,126 @@
 \usepackage{tikz}
 
 \begin{document}
-\title{Social media pulse: The shape of breaking news on social media}  
-\author{Scott Hendrickson \\ Data Scientist  \\ Gnip Inc.\\ @DrSkippy27}
+\title{About Gnip, with examples\ldots}
+\subtitle{Data Science/Business Analytics Meetup - Denver}
+\author{Scott Hendrickson \\ Data Scientist \\  @DrSkippy27}
 \date{\today} 
 
 % title
 
 \begin{frame}
 \titlepage
+\end{frame}
+
+%
+%   ABOUT GNIP
+%
+
+\section{Gnip}
+
+% we believe
+
+\begin{frame}
+\begin{center}
+\Large We believe social data has unlimited value and near limitless application \\ [12pt] \ldots this refrain helps keep us focused on our ultimate goal: to be the source of record for all public social conversation.
+\end{center}
+\end{frame}
+
+% provide social media data
+
+\begin{frame}\frametitle{Providing Social Media Data to the Enterprise}
+\begin{center}
+\begin{itemize}
+\item Firehoses - \\ Twitter, Tumblr, Wordpress, Disqus \ldots
+\item Data Collectors - \\ API access (Gnip !Ping) to Facebook, YouTube Comments, Reddit, G+, Flickr \ldots
+\end{itemize}
+\end{center}
+\end{frame}
+
+% firehoses
+
+\begin{frame}
+\begin{center}
+{\Large Firehose: Continuous stream of flexibly structured social media activities in near-real time.}
+\end{center}
+\end{frame}
+
+% volumes
+%wporgcom 760k
+%wporg 300k
+%wpcomcom 260k
+%wpcom 315k
+%idebate 108k
+%wp likes 181k
+%disqus com 1.28M
+%disqus votes 2.25M
+%disqus post votes 109k
+
+\begin{frame} 
+\begin{table}
+\begin{tabular}{l|r}
+\hline
+   {Publisher}   &   {Daily Activity}   \\
+\hline 
+    Twitter      &      400M   \\
+    Tumblr      &        75M   \\
+    Wordpress Posts &     615k   \\
+    Wordpress Comments & 1.1M \\
+    Disqus       &       1.3M  \\
+    Engagement (likes, votes) & 2.4M  \\
+\hline
+\end{tabular}
+\end{table}
+\end{frame}
+
+% sink fail
+% turn this...
+
+\begin{frame}\frametitle{Without Gnip\ldots}
+  \begin{center}
+    \includegraphics[width=3.5cm]{./imgs/sinkfail.png}
+  \end{center}
+\end{frame}
+
+% ...into this
+% firehose success
+
+\begin{frame}\frametitle{With Gnip\ldots}
+  \begin{center}
+    \includegraphics[width=5cm]{./imgs/GNIP-firehose-office-drinking-fountain_FINAL.jpeg} \\ [6pt]
+    \url{http://blog.ubervu.com/ubervu-is-now-plugged-in-to-gnip.html}
+  \end{center}
+\end{frame}
+
+
+%%%
+%%%
+%%%
+
+% powertrack filtering
+
+\begin{frame}
+\begin{center}
+{\Huge Filter: match terms (AND, OR, NOT), metadata }
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\begin{center}
+{\Huge Shape: sample, redundancy, replay }
+\end{center}
+\end{frame}
+
+%
+% social media pulse
+%
+
+\section{Social media pulse: The shape of breaking news on social media}
+\begin{frame}
+\begin{center}
+{\Huge \insertsection }
+\end{center}
 \end{frame}
 
 % staging the question
@@ -72,39 +186,32 @@
 \end{center}
 \end{frame}
 
-% volumes
-%wporgcom 760k
-%wporg 300k
-%wpcomcom 260k
-%wpcom 315k
-%idebate 108k
-%wp likes 181k
-%disqus com 1.28M
-%disqus votes 2.25M
-%disqus post votes 109k
+% toyota
+\begin{frame}
+  \begin{center}
+    \includegraphics[width=8cm]{./imgs/bars.pdf}
+  \end{center}
+\end{frame}
 
-\begin{frame} 
-\begin{table}
-\begin{tabular}{l|r}
-\hline
-   {Publisher}   &   {Daily Activity}   \\
-\hline 
-    Twitter      &      400M   \\
-    Tumblr      &        75M   \\
-    Wordpress Posts &     615k   \\
-    Wordpress Comments & 1.1M \\
-    Disqus       &       1.3M  \\
-    Engagement (likes, votes) & 2.4M  \\
-\hline
-\end{tabular}
-\end{table}
+% toyota
+\begin{frame}
+  \begin{center}
+    \includegraphics[width=7cm]{./imgs/bars_tot.pdf}
+  \end{center}
+\end{frame}
+
+% toyota
+\begin{frame}
+  \begin{center}
+    \includegraphics[width=6cm]{./imgs/bars_stacked.pdf}
+  \end{center}
 \end{frame}
 
 % flooding
 
 \begin{frame}
   \begin{center}
-    \includegraphics[width=7cm]{./imgs/flooding.png}
+    \includegraphics[width=6.5cm]{./imgs/flooding.png}
   \end{center}
 \end{frame}
 
@@ -262,35 +369,11 @@ F_S(t) = Q(\alpha, 0, \frac{ t}{\beta})
   \end{center}
 \end{frame}
 
-% sink fail
-
-\begin{frame}\frametitle{Without Gnip\ldots}
-  \begin{center}
-    \includegraphics[width=4cm]{./imgs/sinkfail.png}
-  \end{center}
-\end{frame}
-
-
-%
-\begin{frame}
-\begin{center}
-{\Huge Filter: match terms (AND, OR, NOT), metadata }
-\end{center}
-\end{frame}
-
-
-\begin{frame}
-\begin{center}
-{\Huge Shape: sample, redundancy, replay }
-\end{center}
-\end{frame}
-
-
 \begin{frame}
   \begin{center}
   \Large{Thank you!  \\ [20pt]}
     \includegraphics[width=3cm]{./imgs/logo.png} \\ [15pt]
-   \Large{Presentation, data, code at: github.com/DrSkippy27/Defrag2012 }
+   \Large{Presentation, data, code at: github.com/DrSkippy27/DSBAMeetup2012 }
   \end{center}
 \end{frame}
 
