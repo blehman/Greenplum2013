@@ -140,7 +140,7 @@
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{./imgs/json.png}}
 \begin{frame}
   \begin{center}
-\textcolor{black}{\Huge Link: \hyperlink{file://localhost/Users/scotthendrickson/Documents/DSBAMeetup2012/twitter_record.html}{twitter.json}}
+\textcolor{black}{\Huge Example Activity: \hyperlink{file://localhost/Users/scotthendrickson/Documents/DSBAMeetup2012/twitter_record.html}{twitter.json}}
   \end{center}
 \end{frame}
 }
@@ -191,15 +191,15 @@ lang:en toyota yaris -lkw -aqua -bail -died -film -toka -camry
 \begin{frame}\frametitle{Enterprise Features}
 \begin{center}
 \begin{itemize}
+\item Rules: 250K rules
+\item Update individual rules without disconnect, $\lesssim1s$ update time (100s of rules)
+\item Rule tagging
 \item Keep alive - signal that connection is live, even when no data is coming
 \item Low latency: avg 1s Twitter; 10s Twitter enriched \ldots
 \item Redundancy - multiple simultaneous connections
 \item Backfill - buffer data and fill in if short term disconnect
 \item Replay - connect with start and end dates to stream past time periods (<5 days)
 \item Historical PowerTrack - Twitter historical filtering for any time period
-\item Rules: 250K rules
-\item Update individual rules without disconnect, $\lesssim1s$ update time (100s of rules)
-\item Rule tagging
 \end{itemize}
 \end{center}
 \end{frame}
@@ -223,7 +223,7 @@ lang:en toyota yaris -lkw -aqua -bail -died -film -toka -camry
 \end{center}
 \end{frame}
 
-% "accelerating the aha moment"
+% 3 parts
 
 \begin{frame}
 \begin{center}
@@ -266,11 +266,11 @@ lang:en toyota yaris -lkw -aqua -bail -died -film -toka -camry
 \end{frame}
 
 % toyota
-\begin{frame}
-  \begin{center}
-    \includegraphics[width=6cm]{./imgs/bars_stacked.pdf}
-  \end{center}
-\end{frame}
+%\begin{frame}
+%  \begin{center}
+%    \includegraphics[width=6cm]{./imgs/bars_stacked.pdf}
+%  \end{center}
+%\end{frame}
 
 % flooding
 
@@ -290,31 +290,31 @@ lang:en toyota yaris -lkw -aqua -bail -died -film -toka -camry
 
 % chelsea con-ed example
 
-\begin{frame}
+\begin{frame}\frametitle{Sandy -- Chelsea Power Outage}
   \begin{center}
     \includegraphics[width=8cm]{./imgs/fake.pdf}
   \end{center}
 \end{frame}
 
-\begin{frame}
+\begin{frame}\frametitle{Chelsea Power Outage: Loess}
   \begin{center}
     \includegraphics[width=8cm]{./imgs/fake_fit.pdf}
   \end{center}
 \end{frame}
 
-\begin{frame}
+\begin{frame}\frametitle{Better Statistical Model}
   \begin{center}
     \includegraphics[width=8cm]{./imgs/fake_fit2.pdf}
   \end{center}
 \end{frame}
 
-\begin{frame}
+\begin{frame}\frametitle{Real event has much higher volume}
   \begin{center}
     \includegraphics[width=8cm]{./imgs/real.pdf}
   \end{center}
 \end{frame}
 
-\begin{frame}
+\begin{frame}\frametitle{Real event has much higher volume}
   \begin{center}
     \includegraphics[width=8cm]{./imgs/real_fit.pdf}
   \end{center}
@@ -324,7 +324,7 @@ lang:en toyota yaris -lkw -aqua -bail -died -film -toka -camry
 
 \begin{frame}
 \begin{center}
-{\Huge realtime firehose: speed}
+{\Huge realtime firehose: speed of story}
 \end{center}
 \end{frame}
 
