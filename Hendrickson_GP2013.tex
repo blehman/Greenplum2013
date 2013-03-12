@@ -23,7 +23,7 @@
 \usepackage{tikz}
 
 \begin{document}
-\title{Twitter Firehose and PowerTrack}
+\title{Gnip Twitter Firehose and PowerTrack}
 \author{Scott Hendrickson \\ Principal Data Scientist, Gnip \\  @DrSkippy27}
 \date{\today} 
 
@@ -99,8 +99,16 @@
 \begin{frame}\frametitle{\textcolor{black} {Gnip stream management}}
   \begin{center}
 \textcolor{black} {
-\Huge \href{http://console.gnip.com}{http://console.gnip.com} }
+\Huge \href{http://console.gnip.com}{http://console.gnip.com} 
+}
   \end{center}
+\end{frame}
+}
+
+{
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{./imgs/curling.jpg}}
+\begin{frame}[fragile]
+\Huge{\color{black}\secname{}}
 \end{frame}
 }
 
@@ -115,7 +123,7 @@ curl --compressed -v \
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{More curl-ing the firehose}
+\frametitle{More curling the firehose}
 \begin{verbatim}
 curl --compressed -s \
 -ushendrickson@gnip.com:<password>  \
@@ -164,7 +172,7 @@ curl --compressed -s \
 
 % rules examples
 
-\begin{frame}[fragile]\frametitle{Example Toyota PowerTrack Rules}
+\begin{frame}[fragile]\frametitle{Example Toyota PowerTrack rules}
 \begin{verbatim}
 (sexy OR speed OR speeding OR \"sport utility\" OR ...
     suv OR toyota) (infiniti OR infinitis OR #infiniti OR @infiniti) -job 
@@ -215,12 +223,12 @@ lang:ru toyota dyna -lkw -aqua -bail -died -film -toka -camry
 \end{verbatim}
 \end{frame}
 
-\begin{frame}\frametitle{RESTful API}
+\begin{frame}\frametitle{Rules REST API}
 \begin{itemize}
-\item POST (add rule)
+\item POST (add rules)
 \item DELETE (rule match by value)
-\item GET (rule match by value)
-\item UPDATE pattern: GET, alter rule, ADD, DELETE
+\item GET (rule list)
+\item UPDATE pattern: GET, (alter rule), ADD, DELETE
 \item https://api.gnip.com:443/accounts/shendrickson/\\
     publishers/twitter/streams/track/track2/rules.json
 \end{itemize}
@@ -238,8 +246,14 @@ lang:ru toyota dyna -lkw -aqua -bail -died -film -toka -camry
 }
 
 \section{Tools}
+{
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{./imgs/curling.jpg}}
+\begin{frame}[fragile]
+\Huge{\color{black}\secname{}}
+\end{frame}
+}
 
-\begin{frame}\frametitle{Simple Parser: TWitterACTivitieS}
+\begin{frame}\frametitle{Simple parser: TWitterACTivitieS}
 \begin{itemize}
 \item core idea: use twacs to parse common twitter elements to pipe-delimited (flat) structure
 \item requires: Python
@@ -312,7 +326,7 @@ Options:
 
 
 \begin{frame}[fragile]
-\frametitle{Curl-ing and parsing the firehose}
+\frametitle{Curling and parsing the firehose}
 \begin{verbatim}
 curl --compressed -s \
 -ushendrickson@gnip.com:<password>  \
@@ -332,7 +346,14 @@ curl --compressed -s \
 \end{itemize}
 \end{frame}
 
-\section{Replies and Retweets}
+{
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{./imgs/curling.jpg}}
+\begin{frame}[fragile]
+\Huge{\color{black}Twitter stream \\ [10pt] attributes}
+\end{frame}
+}
+
+\section{Replies and retweets}
 
 \begin{frame}[fragile]
 \frametitle{inReplyTo data element}
@@ -343,7 +364,6 @@ curl --compressed -s \
       "link": "http://twitter.com/rachelschadd/statuses/309064691186020352"
    }
 
-
 {
    "body": "@stonesy10 clearly but Madrid can!! Arsenal won't have to 
           worry bout that next season though", 
@@ -352,6 +372,7 @@ curl --compressed -s \
    }
 \end{verbatim}
 \end{frame}
+
 
 
 \begin{frame}[fragile]\frametitle{Retweets}
@@ -385,7 +406,7 @@ curl --compressed -s \
 
 % twitter lang 1
 
-\begin{frame}\frametitle{Twitter Bio Langauges}
+\begin{frame}\frametitle{Twitter bio langauges}
   \begin{center}
     \includegraphics[width=7.5cm]{./imgs/distro_bio.pdf}
   \end{center}
@@ -393,7 +414,7 @@ curl --compressed -s \
 
 % twitter lang 1
 
-\begin{frame}\frametitle{Twitter Tweet (Gnip) Languages}
+\begin{frame}\frametitle{Twitter tweet (Gnip) languages}
   \begin{center}
     \includegraphics[width=7.5cm]{./imgs/distro_gnip.pdf}
   \end{center}
@@ -401,7 +422,7 @@ curl --compressed -s \
 
 % twitter lang 1
 
-\begin{frame}\frametitle{Twitter Bio vs. Tweet Languages}
+\begin{frame}\frametitle{Twitter bio vs. tweet languages}
   \begin{center}
     \includegraphics[width=7.5cm]{./imgs/heatmap.pdf}
   \end{center}
@@ -446,6 +467,13 @@ Geo Tagged: (Lat, Long) "Point"	& High & 1.235\% \\ \hline
 % social media pulse
 
 \section{Social media pulse}
+
+{
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{./imgs/curling.jpg}}
+\begin{frame}[fragile]
+\Huge{\color{black}\secname{}}
+\end{frame}
+}
 
 % staging the question
 
