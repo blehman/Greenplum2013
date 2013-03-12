@@ -1,36 +1,30 @@
-%  DEFRAG Presentation
-%
-% 12 Novebmer 2012
+% Greenplum visit
+% 12 March 2013
 % Scott Hendrickson
 % @DrSkippy27
-% Gnip Inc
-% 
+% Gnip
 
 \documentclass{beamer}
 \setbeamertemplate{navigation symbols}{}
 
 % THEMES
-%\usetheme{Bergen}
-%\usetheme{Singapore}
 \usetheme{gnip}
-
+% PACKAGES
 \usepackage[group-separator={,}]{siunitx}
 %\usepackage{fontspec}
 \usepackage{graphicx}
-
+% FOOTER
 \setbeamertemplate{footline}[text line]{
-    \colorbox{white}{\parbox[22px]{\paperwidth} {\color{linecolour} {\line(1,0){500} \\ \hfill Gnip Inc.   @DrSkippy27}}}
+\colorbox{white}{\parbox[22px]{\paperwidth} {\color{linecolour} {\line(1,0){500} \\ \hfill @DrSkippy27 @gnip}}}
 }
-
 \beamersetuncovermixins{\opaqueness<1>{25}}{\opaqueness<2->{15}}
 
 \usepackage{minted}
 \usepackage{tikz}
 
 \begin{document}
-\title{Gnip, with examples\ldots}
-\subtitle{Data Science/Business Analytics Meetup - Denver}
-\author{Scott Hendrickson \\ Data Scientist \\  @DrSkippy27}
+\title{Twitter Firehose and PowerTrack}
+\author{Scott Hendrickson \\ Principal Data Scientist, Gnip \\  @DrSkippy27}
 \date{\today} 
 
 % title
@@ -39,51 +33,19 @@
 \titlepage
 \end{frame}
 
-%
-%   ABOUT GNIP
-%
-
-\section{Gnip}
-
-% we believe
-
-\begin{frame}
-\begin{center}
-\Large We believe social data has unlimited value and near limitless application \\ [12pt] \ldots this refrain helps keep us focused on our ultimate goal: to be the source of record for all public social conversation.
-\end{center}
-\end{frame}
-
-% provide social media data
-
-\begin{frame}\frametitle{Providing Social Media Data to the Enterprise}
-\begin{center}
-\begin{itemize}
-\item Firehoses - \\ Twitter, Tumblr, Wordpress, Disqus \ldots
-\item Data Collectors - \\ API access (Gnip !Ping) to Facebook, YouTube Comments, Reddit, G+, Flickr \ldots
-\end{itemize}
-\end{center}
-\end{frame}
-
 % firehoses
 
-\begin{frame}\frametitle{Firehose}
+\section{Firehose}
+
+\begin{frame}\frametitle{Gnip firehose}
 \begin{center}
-{\Large Continuous stream of flexibly structured social media activities in near-real time.}
+{\Large Continuous stream \\ [10pt] of JSON tweets \\ [15pt] in near-real time}
 \end{center}
 \end{frame}
 
 % volumes
-%wporgcom 760k
-%wporg 300k
-%wpcomcom 260k
-%wpcom 315k
-%idebate 108k
-%wp likes 181k
-%disqus com 1.28M
-%disqus votes 2.25M
-%disqus post votes 109k
 
-\begin{frame} 
+\begin{frame} \frametitle{Example firehose volumes}
 \begin{table}
 \begin{tabular}{l|r}
 \hline
@@ -100,154 +62,396 @@
 \end{table}
 \end{frame}
 
-% history of growth
-
-\begin{frame}\frametitle{Twitter Growth (2006 - 2010)\ldots}
+\begin{frame}\frametitle{Twitter volumes -- two weeks}
   \begin{center}
-    \includegraphics[width=7.5cm]{./imgs/TweetCount_byDay.pdf}
+    \includegraphics[width=6.5cm]{./imgs/tweets.png}
   \end{center}
 \end{frame}
 
-
-% sink fail
-% turn this...
-
-\begin{frame}\frametitle{Without Gnip\ldots}
+\begin{frame}\frametitle{Twitter volumes - day of week}
   \begin{center}
-    \includegraphics[width=3.5cm]{./imgs/sinkfail.png}
+    \includegraphics[width=7.5cm]{./imgs/dow.png}
   \end{center}
 \end{frame}
 
-% ...into this
-% firehose success
-
-\begin{frame}\frametitle{With Gnip\ldots}
+\begin{frame}\frametitle{Twitter volumes - hour of day}
   \begin{center}
-    \includegraphics[width=5cm]{./imgs/GNIP-firehose-office-drinking-fountain_FINAL.jpeg} \\ [6pt]
-    \url{http://blog.ubervu.com/ubervu-is-now-plugged-in-to-gnip.html}
+    \includegraphics[width=5cm]{./imgs/hour.png}
   \end{center}
 \end{frame}
 
-% powertrack filtering
-
-\begin{frame}\frametitle{Streaming firehose with cURL \ldots}
-  \begin{center}
-    \includegraphics[width=7cm]{./imgs/hose-json.png} \\
-  \end{center}
-\end{frame}
+% payload
 
 {
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{./imgs/json.png}}
-\begin{frame}
+\begin{frame}\frametitle{\textcolor{black} {Twitter payload}}
   \begin{center}
-\textcolor{black}{\Huge Example Activity: \hyperlink{file://localhost/Users/scotthendrickson/Documents/DSBAMeetup2012/twitter_record.html}{twitter.json}}
+\textcolor{black} {
+\Huge \href{run:./twitter_record.html}{twitter.json} }
   \end{center}
 \end{frame}
 }
 
-\begin{frame}\frametitle{PowerTrack: Shape and Filter}
+\section{Streaming data from the firehose}
+
+{
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{./imgs/json.png}}
+\begin{frame}\frametitle{\textcolor{black} {Gnip stream management}}
+  \begin{center}
+\textcolor{black} {
+\Huge \href{http://console.gnip.com}{http://console.gnip.com} }
+  \end{center}
+\end{frame}
+}
+
+\begin{frame}[fragile]
+\frametitle{Curl the firehose}
+\begin{verbatim}
+curl --compressed -v \
+-ushendrickson@gnip.com  \
+"https://stream.gnip.com:443/accounts/shendrickson/
+     publishers/twitter/streams/track/track2.json"
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{More curl-ing the firehose}
+\begin{verbatim}
+curl --compressed -s \
+-ushendrickson@gnip.com:<password>  \
+"https://stream.gnip.com:443/accounts/shendrickson/
+    publishers/twitter/streams/track/track2.json" \
+-o outfile.json
+\end{verbatim}
+\end{frame}
+
+\section{PowerTrack}
+
+\begin{frame}\frametitle{PowerTrack: filter and shape}
 \begin{itemize}
-\item core idea: token filter (e.g. "obama", "beer" \ldots)
-\item operators: meta-data (geo, language, bios, \ldots)
-\item operators: shaping (e.g. sample:10%%)
+\item core idea: exact token matches (e.g. "obama", "beer" \ldots)
+\item non-token matches: ``happy birthday'' and ``contains:dog''
+\item meta-data operators: geo, language, bios, \ldots
+\item shaping operators: (e.g. ``sample:10'' gives 10\%)
 \item operators: (by publisher) user, hashtag, language,\ldots
-\item combinations:  
+\item filter on 100\% of the firehose
 \end{itemize}
+\end{frame}
 
-% rules
+% rules combining
 
+\begin{frame}\frametitle{PowerTrack: combining rules}
 \begin{equation*}
 \begin{aligned}
         newline &= OR \\
         space &= AND \\
-        ``AND'' &= AND \\
         ``OR'' &= OR \\
         ``-'' &= NOT \\
-        ``(\ldots)'' &= grouping\\
-        `` \ldots ''  &= literal \\
+        ``(\ldots)'' &= grouping
 \end{aligned}
 \end{equation*}
+\end{frame}
+
+% limits
+
+\begin{frame}\frametitle{PowerTrack: rule limits}
+\begin{itemize}
+\item A single PowerTrack rule may contain up to 10 positive clauses, and up to 50 negative clauses
+\item A single PowerTrack rule may not have more than 1024 characters, including OR operators and parentheses
+\item Max 250K rules
+\end{itemize}
 \end{frame}
 
 % rules examples
 
 \begin{frame}[fragile]\frametitle{Example Toyota PowerTrack Rules}
 \begin{verbatim}
--evt10023885212 (sexy OR speed OR speeding OR \sport utility\" OR ...
-  suv OR toyota) (infiniti OR infinitis OR #infiniti OR @infiniti) -job ...
-  -\"<money>\" -\"<phone>\" -jobs -deal -review -#jobs -tattoo ...
-  -giveaway -deals -discount -reviews -#job -jewelry -jewelry
-@toyotacanada
+(sexy OR speed OR speeding OR \"sport utility\" OR ...
+    suv OR toyota) (infiniti OR infinitis OR #infiniti OR @infiniti) -job 
+    -\"<money>\" -\"<phone>\" -jobs -deal -review -#jobs -tattoo
+    -giveaway -deals -discount -reviews -#job -jewelry -jewelry
+@toyotacanada sample:40
 lang:en toyota recall
-lang:ru toyota recall
 lang:it toyota window
 lang:fr toyota recall
 lang:en toyota auris -crime -lease -sells -thief -police -robbed -robber
 lang:ru toyota dyna -lkw -aqua -bail -died -film -toka -camry
-lang:en toyota yaris -lkw -aqua -bail -died -film -toka -camry
 \end{verbatim}
 \end{frame}
 
-\begin{frame}\frametitle{Enterprise Features}
-\begin{center}
+\begin{frame}\frametitle{Enterprise PowerTrack features}
 \begin{itemize}
-\item Rules: 250K rules
-\item Update individual rules without disconnect, $\lesssim1s$ update time (100s of rules)
+\item Update individual rules without disconnect ( $\lesssim1s$ update time for 100s of rules)
 \item Rule tagging
-\item Keep alive - signal that connection is live, even when no data is coming
-\item Low latency: avg 1s Twitter; 10s Twitter enriched \ldots
-\item Redundancy - multiple simultaneous connections
+\item Keep alive - signal that connection is live, even when no data is coming (30 s)
+\item Low latency: avg 1s Twitter raw; 10s Twitter enriched
+\item Redundancy - multiple simultaneous connections available
 \item Backfill - buffer data and fill in if short term disconnect
-\item Replay - connect with start and end dates to stream past time periods (<5 days)
+\item PowerTrack Replay - connect with start and end dates to stream past time periods (<5 days)
 \item Historical PowerTrack - Twitter historical filtering for any time period
 \end{itemize}
-\end{center}
 \end{frame}
 
-%
+% rules API
+
+\begin{frame}[fragile]\frametitle{Rule JSON}
+\begin{verbatim}
+{
+   "rules": [
+      {
+         "tag": "presidents", 
+         "value": "obama"
+      }, 
+      {
+         "tag": "musicians", 
+         "value": "gaga"
+      }, 
+      {
+         "tag": "musicians", 
+         "value": "bieber"
+      }
+   ]
+} 
+\end{verbatim}
+\end{frame}
+
+\begin{frame}\frametitle{RESTful API}
+\begin{itemize}
+\item POST (add rule)
+\item DELETE (rule match by value)
+\item GET (rule match by value)
+\item UPDATE pattern: GET, alter rule, ADD, DELETE
+\item https://api.gnip.com:443/accounts/shendrickson/\\
+    publishers/twitter/streams/track/track2/rules.json
+\end{itemize}
+\end{frame}
+
+{
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{./imgs/json.png}}
+\begin{frame}\frametitle{\textcolor{black} {Twitter PowerTrack documentation}}
+  \begin{center}
+\textcolor{black} {
+\Large \href{http://docs.gnip.com/}{http://docs.gnip.com} \\ [20 pt]
+\href{http://support.gnip.com/customer/portal/articles/901152-powertrack-operators}{http://support.gnip.com/customer/portal/ articles/901152-powertrack-operators} }
+  \end{center}
+\end{frame}
+}
+
+\section{Tools}
+
+\begin{frame}\frametitle{Simple Parser: TWitterACTivitieS}
+\begin{itemize}
+\item core idea: use twacs to parse common twitter elements to pipe-delimited (flat) structure
+\item requires: Python
+\item github: https://github.com/DrSkippy27/Twacs
+\item From PyPi: sudo pip install twacs 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{twacs.py examples - prettifier}
+\begin{verbatim}
+> gzip -cd twitter_oneDay_onePercent.json.gz | twacs-prettifier.py 
+{
+   "body": "Giving them 1 inch and they take a mile", 
+   "retweetCount": 0, 
+   "generator": {
+      "link": "http://twitter.com/download/iphone", 
+      "displayName": "Twitter for iPhone"
+   }, 
+   "gnip": {
+      "klout_score": 47, 
+      "language": {
+         "value": "en"
+      }
+   }, 
+\end{verbatim}
+\ldots
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{twacs.py examples - basic parse}
+\begin{verbatim}
+> gzip -cd twitter_oneDay_onePercent.json.gz | twacs.py 
+tag:search.twitter.com,2005:309063808016584704|
+      2013-03-05T22:12:08.000Z|
+      Giving them 1 inch and they take a mile
+tag:search.twitter.com,2005:309063808041771008|
+      2013-03-05T22:12:08.000Z|
+      @luizaaguiarb só se for o teu filho! O meu vai ser super higienizado e cheiroso! Sai!
+tag:search.twitter.com,2005:309063808331153409|
+      2013-03-05T22:12:08.000Z|
+      @SlyOuu Mdrrr le negro s'emballe les coquilles
+tag:search.twitter.com,2005:309063808427622402|
+      2013-03-05T22:12:08.000Z|
+      RT @NotARapistHere: My favorite pickup line: Get in the van.
+ Audsbgivasiugbasdpiub
+\end{verbatim}
+\ldots
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{twacs.py examples - help}
+\begin{verbatim}
+>twacs.py -h
+Usage: twacs.py [options]
+
+Options:
+  -h, --help       show this help message and exit
+  -g, --geo        Include geo fields
+  -u, --user       Include user fields
+  -r, --rules      Include rules fields
+  -s, --urls       Include urls fields
+  -l, --lang       Include language fields
+  -p, --pretty     Pretty JSON output of full records
+  -c, --csv        Comma-delimited output (default is | without quotes)
+  -x, --explain    Show field names in output for for sample input records
+  -i, --influence  Show user's influence metrics
+\end{verbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Curl-ing and parsing the firehose}
+\begin{verbatim}
+curl --compressed -s \
+-ushendrickson@gnip.com:<password>  \
+"https://stream.gnip.com:443/accounts/shendrickson/
+     publishers/twitter/streams/track/track2.json" | twacs.py
+\end{verbatim}
+\end{frame}
+
+% powertrack rules
+
+\begin{frame}\frametitle{Rules management}
+\begin{itemize}
+\item core idea: use to list, delete, add  and update rules
+\item requires: Python
+\item library and command line utilities
+\item github: https://github.com/DrSkippy27/Gnip-Python-PowerTrack-Rules
+\end{itemize}
+\end{frame}
+
+\section{Replies and Retweets}
+
+\begin{frame}[fragile]
+\frametitle{inReplyTo data element}
+\begin{verbatim}
+{
+   "body": "@rachelschadd @kylefraley3 @toritabin don't read, just tweet!", 
+   "inReplyTo": {
+      "link": "http://twitter.com/rachelschadd/statuses/309064691186020352"
+   }
+
+
+{
+   "body": "@stonesy10 clearly but Madrid can!! Arsenal won't have to 
+          worry bout that next season though", 
+   "inReplyTo": {
+      "link": "http://twitter.com/stonesy10/statuses/309063725309104128"
+   }
+\end{verbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]\frametitle{Retweets}
+\begin{itemize}
+\item about 17\% of twitter activities are retweets
+\item convention ``RT \ldots'' added by many clients to text
+\item unattributed quoting
+\end{itemize}
+\begin{verbatim}
+{
+   "body": "RT @UberBulIshit: Snoop Dogg changed his name to Snoop 
+             Lion after losing a bet in which he was out-smoked by Justin Bieber.", 
+   "retweetCount": 1979, 
+...
+\end{verbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]\frametitle{Retweets link}
+\begin{verbatim}
+      "object": {
+         "postedTime": "2013-03-05T22:08:54.000Z", 
+         "summary": "Fergie, that was for Jonjo Shelvey.", 
+         "link": "http://twitter.com/KopiteKru/statuses/309062995366010882"
+...
+\end{verbatim}
+\href{http://twitter.com/KopiteKru/statuses/309062995366010882}{http://twitter.com/KopiteKru/statuses/309062995366010882}
+\end{frame}         
+         
+\section{Languages}
+
+% twitter lang 1
+
+\begin{frame}\frametitle{Twitter Bio Langauges}
+  \begin{center}
+    \includegraphics[width=7.5cm]{./imgs/distro_bio.pdf}
+  \end{center}
+\end{frame}
+
+% twitter lang 1
+
+\begin{frame}\frametitle{Twitter Tweet (Gnip) Languages}
+  \begin{center}
+    \includegraphics[width=7.5cm]{./imgs/distro_gnip.pdf}
+  \end{center}
+\end{frame}
+
+% twitter lang 1
+
+\begin{frame}\frametitle{Twitter Bio vs. Tweet Languages}
+  \begin{center}
+    \includegraphics[width=7.5cm]{./imgs/heatmap.pdf}
+  \end{center}
+\end{frame}
+
+
+\section{Geolocation}
+
+
+\begin{frame}[fragile]
+\frametitle{Geo information in tweets}
+\begin{verbatim}
+[ tweet location] | Tweet location place id'd by twitter | User bio location
+--------------------------------------------------------------------------------------
+['41.02117698', '-73.8731331']|Mercy College, Dobbs Ferry|US|NYC
+['-7.54556', '110.82484']|Banjarsari, Surakarta|ID|Indonesia
+['51.7541896', '-0.34086304']|Saint Albans, Hertfordshire|GB|St Albans
+['51.8446547', '4.3364468']|Spijkenisse|NL|DEDICATED FOR LIFE
+['18.22484423', '-65.9027102']|Ceiba Norte, PR|US|Juncos
+['40.21630994', '28.96884114']|Türkiye|TR|Erdek /Bursa
+['36.89167243', '30.67495879']|Türkiye|TR|big drummer
+['-6.2590775', '106.868624']|Kramat Jati, Jakarta Timur|ID|Random
+\end{verbatim}
+\end{frame}
+
+\begin{frame}\frametitle{Geo location of Tweets}
+\begin{table}
+\begin{tabular}{ m{3.5cm} | m{3cm} | m{2cm}}
+\hline
+Type & Precision & Frequency \\ \hline
+Geo Tagged: (Lat, Long) "Point"	& High & 1.235\% \\ \hline
+ Geo Tagged: (Lat, Long) points "Polygon" & Medium-Low	& 1.418\% \\ \hline
+ -- & With either Point, Polygon or Both & 1.596\% \\\hline
+ Country Code &	Medium & 1.43\% \\ \hline
+ User Bio Place & High (long, lat)-Low (gibberish) &57.67\% \\ \hline
+ Timezone Offset & Medium-Low & 73.6\% \\
+ \hline
+\end{tabular}
+\end{table}
+\end{frame}
+
 % social media pulse
-%
 
-\section{Social media pulse: The shape of breaking news on social media}
-\begin{frame}
-\begin{center}
-{\Huge \insertsection }
-\end{center}
-\end{frame}
+\section{Social media pulse}
 
 % staging the question
 
 \begin{frame}
 \begin{center}
-{\Huge why social media for breaking stories? }
-\end{center}
-\end{frame}
-
-% 3 parts
-
-\begin{frame}
-\begin{center}
-{\Huge 1. audience, perspective and coverage }
-\end{center}
-\end{frame}
-
-\begin{frame}
-\begin{center}
-{\Huge 2. speed }
-\end{center}
-\end{frame}
-
-\begin{frame}
-\begin{center}
-{\Huge 3. richness, diversity }
-\end{center}
-\end{frame}
-
-%%  audience, perspective and coverage
-
-\begin{frame}
-\begin{center}
-{\Huge many publishers: audience, perspective and coverage }
+{\Huge Audience \& perspective, Timing}
 \end{center}
 \end{frame}
 
@@ -255,28 +459,6 @@ lang:en toyota yaris -lkw -aqua -bail -died -film -toka -camry
 \begin{frame}
   \begin{center}
     \includegraphics[width=8cm]{./imgs/bars.pdf}
-  \end{center}
-\end{frame}
-
-% toyota
-\begin{frame}
-  \begin{center}
-    \includegraphics[width=7cm]{./imgs/bars_tot.pdf}
-  \end{center}
-\end{frame}
-
-% toyota
-%\begin{frame}
-%  \begin{center}
-%    \includegraphics[width=6cm]{./imgs/bars_stacked.pdf}
-%  \end{center}
-%\end{frame}
-
-% flooding
-
-\begin{frame}
-  \begin{center}
-    \includegraphics[width=6.5cm]{./imgs/flooding.png}
   \end{center}
 \end{frame}
 
@@ -296,11 +478,6 @@ lang:en toyota yaris -lkw -aqua -bail -died -film -toka -camry
   \end{center}
 \end{frame}
 
-\begin{frame}\frametitle{Chelsea Power Outage: Loess}
-  \begin{center}
-    \includegraphics[width=8cm]{./imgs/fake_fit.pdf}
-  \end{center}
-\end{frame}
 
 \begin{frame}\frametitle{Better Statistical Model}
   \begin{center}
@@ -310,37 +487,43 @@ lang:en toyota yaris -lkw -aqua -bail -died -film -toka -camry
 
 \begin{frame}\frametitle{Real event has much higher volume}
   \begin{center}
-    \includegraphics[width=8cm]{./imgs/real.pdf}
-  \end{center}
-\end{frame}
-
-\begin{frame}\frametitle{Real event has much higher volume}
-  \begin{center}
     \includegraphics[width=8cm]{./imgs/real_fit.pdf}
   \end{center}
 \end{frame}
 
-% speed
 
-\begin{frame}
-\begin{center}
-{\Huge realtime firehose: speed of story}
-\end{center}
+\begin{frame}\frametitle{Expected: Hurricane}
+  \begin{center}
+    \includegraphics[width=11cm]{./imgs/hurricane_trend.pdf}
+  \end{center}
+\end{frame}
+%
+%\begin{frame}\frametitle{Unexpected: Earthquake}
+%  \begin{center}
+%    \includegraphics[width=11cm]{./imgs/va_quake.pdf}
+%  \end{center}
+%\end{frame}
+
+\begin{frame}\frametitle{Unexpected: Earthquake}
+  \begin{center}
+    \includegraphics[width=11cm]{./imgs/va_quake_fit1.pdf}
+  \end{center}
 \end{frame}
 
 % Events
 
-\begin{frame}\frametitle{Events}
+\begin{frame}\frametitle{Classifying Events}
 \begin{table}
 \begin{tabular}{ m{2cm} | m{ 2.5cm} | m{4cm}}
 \hline
 Type & Response & Examples \\ \hline
 Expected    & Approx. \newline Symmetric & Hurricane Sandy \newline Olympics \\ \hline
-Unexpected (many obs.) & Social Media \newline Pulse & Beyonce' VMAs \newline  Mexico earthquake \newline  Steve Jobs \\ \hline
-Unexpected (spread) & Sigmoid \newline Pulse & Osama Bin Laden \newline  Whitney Houston \newline  Syrian dissidents \\ \hline
+Unexpected (many obs.) & Social Media \newline Pulse & Beyonc\'{e} VMAs \newline  Mexico earthquake \newline  Steve Jobs \\ \hline
+Unexpected (spread) & Network \newline Models & Osama bin Laden \newline  Whitney Houston \newline  Syrian dissidents \\ \hline
 \end{tabular}
 \end{table}
 \end{frame}
+
 
 % half life
 
@@ -380,56 +563,32 @@ F_S(t) = Q(\alpha, 0, \frac{ t}{\beta})
    \includegraphics[height=6cm]{./imgs/gammadist.pdf}
   \end{center}
 \end{frame}
-
-\begin{frame} \frametitle{Publishers}
-\begin{table}
-\begin{tabular}{l|c}
-\hline
-   {Publisher}   &   {Speed} \\
-\hline 
-    Twitter      &    Fast  \\ 
-    Tumblr      &        Fast and Slow \\
-    Wordpress Posts &   Fast and Medium   \\
-    Wordpress Comments & Fast\\
-    Disqus       &    Fast\\
-    Engagement (likes, votes) &  Fast\\
-\hline
-\end{tabular}
-\end{table}
+\begin{frame}\frametitle{Why model half-life?}
+\begin{center}
+\begin{itemize}
+\Huge{
+\item predict total story volume
+\item compare half-lives
+\item anomalous story evolution
+}
+\end{itemize}
+\end{center}
 \end{frame}
+
+
+\begin{frame}
+  \begin{center}
+    \includegraphics[width=8cm]{./imgs/va_quake_fit1.pdf}
+  \end{center}
+\end{frame}
+
+
 
 % JPMorgan
 
 \begin{frame}
   \begin{center}
     \includegraphics[height=8.5cm]{./imgs/JPMorgan.pdf}
-  \end{center}
-\end{frame}
-
-%%  richness
-
-\begin{frame} \frametitle{Speed and Richness}
-\begin{table}
-\begin{tabular}{m{2cm}| c |m{3cm}}
-\hline
-   {Publisher}   &   {Speed} & {Richness} \\
-\hline 
-    Twitter       & Fast & Concise  \\ [3pt]
-    Tumblr       & Fast, Slow & Rich, multimedia\\  [3pt]
-    Wordpress Posts & Fast, Medium &  Rich, text\\  [3pt]
-    Wordpress Comments  & Fast & Reactive, small-to-medium\\  [3pt]
-    Disqus         & Fast & Reactive, small-to-medium\\  [3pt]
-    Engagement   & Fast & Terse\\ 
-\hline
-\end{tabular}
-\end{table}
-\end{frame}
-
-% summary speed and richness
-
-\begin{frame}\frametitle{Social Cocktail}
-  \begin{center}
-    \includegraphics[width=7cm]{./imgs/socialcocktailgrid.png}
   \end{center}
 \end{frame}
 
@@ -440,8 +599,7 @@ F_S(t) = Q(\alpha, 0, \frac{ t}{\beta})
     {\Large Thank you!}  \\ [20pt]
     \includegraphics[width=3cm]{./imgs/logo.png} \\ [15pt]
     \begin{itemize}
-    \item Presentation, data, code at: \url{http://github.com/DrSkippy27/DSBAMeetup2012}
-    \item Gnip is hiring: \url{http://gnip.com/careers/}
+    \item Presentation, data, code at: \url{http://github.com/DrSkippy27/GreenPlum2013}
     \end{itemize}
   \end{center}
 \end{frame}
